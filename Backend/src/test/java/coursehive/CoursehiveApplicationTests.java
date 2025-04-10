@@ -1,10 +1,10 @@
-package com.example.CourseHive;
+package coursehive;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CourseHiveApplicationTests {
+class CoursehiveApplicationTests {
 
 	@Test
 	void contextLoads() {
