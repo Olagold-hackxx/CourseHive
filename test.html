@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Sidebar with Footer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* Basic reset */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Main layout */
+        main {
+            display: flex;
+            margin-left: 270px; /* Space for sidebar */
+            padding: 20px;
+            transition: margin-left 0.3s ease-in-out;
+        }
+
+        /* Sidebar Style */
+        #sidebar {
+            position: fixed;
+            top: 20px;
+            left: 0;
+            width: 250px;
+            height: calc(100% - 40px); /* Full height minus some padding */
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        /* Sidebar stretched effect (it moves smoothly out of view) */
+        #sidebar.stretched {
+            position: absolute;
+            bottom: 0;
+            top: auto;
+            transition: all 0.5s ease-out;
+        }
+
+        /* Content Section */
+        section {
+            width: 100%;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer Styling */
+        footer {
+            background-color: #222;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            height: 400px;
+        }
+
+        h1, h2 {
+            margin: 0 0 20px 0;
+            font-weight: 500;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* Optional padding to create scrollable content */
+        .content {
+            height: 1800px;
+            padding: 20px;
+            background: linear-gradient(to bottom, #fff, #ddd);
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar">
+        <h3>Sidebar</h3>
+        <p>This is a fixed sidebar. It will scroll with the page when it reaches the footer.</p>
+    </div>
+
+    <main>
+        <section class="content">
+            <h2>Main Content Area</h2>
+            <p>This section contains some text and other content. As you scroll down, the sidebar will stick until it reaches the footer, then it will scroll away to let the footer show up.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>This is the footer. The sidebar should stop scrolling and let the footer appear when you reach this point.</p>
+    </footer>
+
+    <script>
+        // JavaScript to handle the sidebar behavior
+        window.onscroll = function() {
+            handleSidebarScroll();
+        };
+
+        let sidebar = document.getElementById('sidebar');
+        let footer = document.querySelector('footer');
+
+        function handleSidebarScroll() {
+            let sidebarHeight = sidebar.offsetHeight;
+            let footerOffset = footer.offsetTop;
+            let scrollPosition = window.scrollY + window.innerHeight;
+
+            // Check if the sidebar has reached the footer
+            if (scrollPosition >= footerOffset) {
+                sidebar.classList.add('stretched');  // Move sidebar to the bottom
+            } else {
+                sidebar.classList.remove('stretched');  // Reset sidebar to fixed position
+            }
+        }
+    </script>
+</body>
+</html>
