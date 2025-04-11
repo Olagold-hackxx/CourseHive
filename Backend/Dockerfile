@@ -1,5 +1,10 @@
+FROM maven:sapmachine AS build
+COPY src /backend/src
+COPY pom.xml /backend
+RUN mvn -f /backend/pom.xml clean package
+
 FROM openjdk:25-jdk-slim
 WORKDIR /backend
-COPY target/coursehive-0.0.1-SNAPSHOT.jar backend.jar
+COPY --from=build target/coursehive-0.0.1-SNAPSHOT.jar backend.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "backend.jar"]
