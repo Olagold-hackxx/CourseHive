@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/users/register").permitAll()
                 .requestMatchers("/api/users/login").permitAll()
                 .requestMatchers("/error").permitAll() // Allow error endpoint
-                .requestMatchers("/v3/api-docs/**").permitAll()
+                .requestMatchers("/api-docs/**").permitAll()
                 .requestMatchers("/swagger-ui/**").permitAll()
                 .requestMatchers("/swagger-ui.html").permitAll()
                 .anyRequest().authenticated() // All other requests require authentication

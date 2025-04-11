@@ -8,9 +8,9 @@ import jakarta.validation.constraints.Size;
 /**
  * DTO for User Requests and Respone
  */
-public final class UserDto {
+public final class UserLoginDto {
 
-    private UserDto() {
+    private UserLoginDto() {
         throw new UnsupportedOperationException("Utility Class allow no instantiation");
     }
 

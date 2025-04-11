@@ -1,10 +1,14 @@
 package coursehive.controller;
 
-import coursehive.dto.UserDto;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import coursehive.dto.UserRegisterDto;
 import coursehive.entity.User;
 import coursehive.services.UserService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
@@ -16,8 +20,14 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserDto.Response> registerUser(@RequestBody UserDto.Request userRequest) {
+    public ResponseEntity<UserRegisterDto.Response> registerUser(@RequestBody UserRegisterDto.Request userRequest) {
         User createdUser = userService.register(userRequest);
-        return ResponseEntity.ok(UserDto.Response.fromEntity(createdUser));
+        return ResponseEntity.ok(UserRegisterDto.Response.fromEntity(createdUser));
     }
+
+    // @PostMapping("/login")
+    // public ResponseEntity<UserLoginDto.Response> loginUser(@RequestBody UserLoginDto.Request userRequest) {
+    //     User details = userService.register(userRequest);
+
+    // }
 }

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import coursehive.dto.UserDto;
+import coursehive.dto.UserRegisterDto;
 import coursehive.entity.User;
 import coursehive.exceptions.CustomException;
 import coursehive.repository.UserRepository;
@@ -22,7 +22,7 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     // Register a new user
-    public User register(UserDto.Request userRequestDto) {
+    public User register(UserRegisterDto.Request userRequestDto) {
         // Check if the user already exists
         if (userRepository.findByUsername(userRequestDto.username()).isPresent()) {
             throw new CustomException("Username already exists!");
