@@ -1,9 +1,9 @@
-FROM maven:sapmachine AS build
+FROM maven:3.6.3 AS build
 COPY src /backend/src
 COPY pom.xml /backend
 RUN mvn -f /backend/pom.xml clean package
 
-FROM openjdk:25-jdk-slim
+FROM openjdk:17-jdk-slim
 WORKDIR /backend
 COPY --from=build target/coursehive-0.0.1-SNAPSHOT.jar backend.jar
 EXPOSE 8080
