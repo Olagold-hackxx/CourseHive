@@ -1,7 +1,8 @@
-FROM maven:3.6.3 AS build
+FROM maven:3.9.3-eclipse-temurin-17-alpine AS build
+WORKDIR /backend
 COPY src /backend/src
 COPY pom.xml /backend
-RUN mvn -f /backend/pom.xml clean package
+RUN mvn clean package
 
 FROM openjdk:17-jdk-slim
 WORKDIR /backend
