@@ -24,12 +24,16 @@ public final class UserRegisterDto {
             String password,
             @Email(message = "Invalid email format")
             @NotNull(message = "Email is required")
-            String email) {
+            String email,
+            @NotNull(message = "Fullname is required")
+            @Size(min = 4, max = 80, message = "Username must be between 4 and 80 characters")
+            String fullName,
+            String profilePicUrl) {
 
     }
 
     // Response DTO: return data to the client
-    public record Response(Long id, String username, String email, String joinedDate) {
+    public record Response(Long id, String username, String email, String joinedDate, String fullName, String profilePicUrl) {
 
         // Map from entity to DTO
         public static Response fromEntity(User user) {
@@ -37,7 +41,9 @@ public final class UserRegisterDto {
                     user.getId(),
                     user.getUsername(),
                     user.getEmail(),
-                    user.getCreatedAt().toString()
+                    user.getCreatedAt().toString(),
+                    user.getFullName(),
+                    user.getProfilePicUrl()
             );
         }
 

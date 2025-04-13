@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import coursehive.dto.UserLoginDto;
 import coursehive.dto.UserRegisterDto;
 import coursehive.entity.User;
 import coursehive.services.UserService;
@@ -15,6 +16,7 @@ import coursehive.services.UserService;
 public class UserController {
 
     private final UserService userService;
+
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -25,9 +27,9 @@ public class UserController {
         return ResponseEntity.ok(UserRegisterDto.Response.fromEntity(createdUser));
     }
 
-    // @PostMapping("/login")
-    // public ResponseEntity<UserLoginDto.Response> loginUser(@RequestBody UserLoginDto.Request userRequest) {
-    //     User details = userService.register(userRequest);
-
-    // }
+    @PostMapping("/login")
+    public ResponseEntity<UserLoginDto.Response> loginUser(@RequestBody UserLoginDto.Request userRequest) {
+        User user = userService.login(userRequest);
+        return ResponseEntity.ok(UserLoginDto.Response.fromEntity(user));
+    }
 }

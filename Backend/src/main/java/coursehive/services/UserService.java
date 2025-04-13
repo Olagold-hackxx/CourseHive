@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import coursehive.dto.UserLoginDto;
 import coursehive.dto.UserRegisterDto;
 import coursehive.entity.User;
 import coursehive.exceptions.CustomException;
 import coursehive.repository.UserRepository;
-
 
 @Service
 public class UserService {
@@ -36,6 +36,11 @@ public class UserService {
         User user = new User();
         user.setUsername(userRequestDto.username());
         user.setEmail(userRequestDto.email());
+        user.setFullName(userRequestDto.fullName());
+
+        if (userRequestDto.profilePicUrl() != null && !userRequestDto.profilePicUrl().isBlank()) {
+            user.setProfilePicUrl(userRequestDto.profilePicUrl());
+        }
 
         // Encrypt the password
         user.setPassword(passwordEncoder.encode(userRequestDto.password()));
@@ -47,19 +52,18 @@ public class UserService {
     }
 
     // Login logic
-    public User login(String username, String password) {
-        Optional<User> user = userRepository.findByUsername(username);
+    public User login(UserLoginDto.Request loginRequest) {
+        Optional<User> user = userRepository.findByUsername(loginRequest.username());
 
         if (user.isEmpty()) {
             throw new CustomException("User not found!");
         }
 
-        // Check if password matches
-        if (!passwordEncoder.matches(password, user.get().getPassword())) {
+        if (!passwordEncoder.matches(loginRequest.password(), user.get().getPassword())) {
             throw new CustomException("Invalid credentials!");
         }
 
-        // Successful login
         return user.get();
     }
+
 }
